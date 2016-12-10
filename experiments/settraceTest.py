@@ -26,6 +26,7 @@ def setupTrace():
 
     #Get the stack trace:
     callStack = map(lambda frame: [int(lineNumber.search(frame).group(1)), function.search(frame).group(1)], traceback.format_stack())
+    callStack.pop() #Remove the frame corresponding to this callback
 
     #Print the stack trace and displayed value:
     sys.stdout = stdout_
