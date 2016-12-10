@@ -1,0 +1,14 @@
+#Compiled Directories:
+client/public/
+server/public/
+
+#Dependency directories:
+node_modules/
+
+#Runtime Data:
+*.pid
+*.seed
+
+#Logs:
+*.log
+
