@@ -2,7 +2,7 @@
   "name": "pydebugonline",
   "version": "1.0.0",
   "description": "An online Python debugger.",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
