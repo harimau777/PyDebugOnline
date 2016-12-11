@@ -1,12 +1,10 @@
 #!/bin/bash
 
-echo "Should display help"
-python traceCode -h
-
 echo "Should trace code supplied as a string"
-$code="i = 10\nj = 20\nk = i + j\nprint k"
-python traceCode -s $code
+python traceCode.py -s "i = 10\nj = 20\nk = i + j\nprint k"
 
 echo "Should trace code supplied as a file"
-$file="testFile.py"
-python traceCode -f $file
+python traceCode.py -f testFile.py
+
+echo "Should trace exception"
+python traceCode.py -s "i = 10\nj = 20\nk = i + j\nprint k\nfoo"
