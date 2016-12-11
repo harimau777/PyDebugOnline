@@ -5,6 +5,8 @@ import cStringIO
 import traceback
 import re
 import json
+import argparse
+import os
 
 #********************
 # setupTrace
@@ -40,9 +42,30 @@ def setupTrace():
   sys.settrace(traceCallback)
 
 #********************
+# parseArguments
+#********************
+def parseArguments():
+  #Parse command line arguments:
+  parser = argparse.ArgumentParser(description = 'Steps through Python code and prints debug information to STDOUT')
+  parser.add_argument('-h', '--help', action = 'help', help = 'Display help')
+  group = parser.add_mutually_exclusive_group(required = True)
+  group.add_argument('-s', '--string', dest = 'code', help = 'String containing the code to be parsed')
+  group.add_argument('-f', '--file', dest = 'file', type=argparse.FileType('r'), help='File containing the code to be parsed')
+  parser.parse_args()
+
+  #If the code was supplied as a file, then read the file
+  if file in locals():
+    if os.fstat(file.fileno()).st_size <= 1048576:
+      code = file.read()
+    else:
+      return 'Error: File too large'
+
+  return code
+
+#********************
 # main
 #********************
 if __name__ == __main__
-  code = sys.argv[1]
+  code = parseArguments()
   setupTrace()
   exec(code)
