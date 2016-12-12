@@ -10,3 +10,11 @@
   display: flex;
   justify-content: space-around;
 }
+
+.button {
+  display: inline-block;
+  height: 1.5em;
+  border: 1px black solid;
+  border-radius: 5px;
+}
+
