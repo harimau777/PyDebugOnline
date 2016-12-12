@@ -1,4 +1,4 @@
-#!/bin/bash/ python
+#!/bin/bash/python
 
 import sys
 import cStringIO

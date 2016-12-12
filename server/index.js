@@ -1,38 +1,50 @@
 const express = require('express');
 const server = new express;
-const redis = require('redis');
-const redisClient = redis.createClient();
+const compression = require('compression');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const upload = multer({dest: 'python/temp/'});
+const trace = require('./traceCode.js');
+const fs = require('fs');
 
-//Redis database:
-redisClient.on('connect', () => {
-  console.log("Connected to Redis database.");
-});
+let traceData; //Holds the result of a trace
+let lineNumber = 0; //Holds our position as we step through the trace
+
+//Use gzip compression
+server.use(compression());
+
+//Use body parser:
+server.use(bodyParser.json());
 
 //Serve static content:
-server.use(express.static(__dirname + '/../client');
+server.use(express.static(__dirname + '/../client'));
 
 //Routes:
-app.post('/code', (req, res) => {
-  const body = req.body;
+server.post('/code/string', (req, res) => {
+  trace.getTrace(req.body.code, 'string')
+    .then((data) => {
+      traceData = data;
+      lineNumber = 0;
 
-  redisClient.set('code', body, (err, reply) => {
-    if (err) {
-      //Handle error
-    }
-
-    console.log('Stored code in Redis database.');
-  });
-
-  //Send code to debugger
-
-  res.send('Code uploaded successfully');
+      res.send('Trace successful');
+    });
 });
 
-app.get('/step', (req, res) => {
-  const debugMsg = '___get message from debugger___';
-  res.send(debugMsg);
+server.post('/code/file', upload.single('file'), (req, res) => {
+  var path = './' + req.file.path.match(/\/temp\/.+/)[0];
+  trace.getTrace(path, 'file')
+    .then((data) => {
+      traceData = data;
+      lineNumber = 0;
+
+      res.send('Trace successful');
+    });
+});
+
+server.get('/step', (req, res) => {
+  res.send(JSON.stringify(traceData[lineNumber]));
+  lineNumber++;
 });
 
 //Start server:
-server.listen(1337, () => console.log('Server listening on port 1337.');
-
+server.listen(1337, () => console.log('Server listening on port 1337.'));
