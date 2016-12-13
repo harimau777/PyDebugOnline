@@ -37,6 +37,8 @@ server.post('/code/file', upload.single('file'), (req, res) => {
       traceData = data;
       lineNumber = 0;
 
+      fs.unlink(__dirname + '/../' + req.file.path, (err) => err ? console.log(err) : console.log('Temporary file deleted'));
+
       res.send('Trace successful');
     });
 });
