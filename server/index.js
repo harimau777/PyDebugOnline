@@ -26,8 +26,9 @@ server.post('/code/string', (req, res) => {
       traceData = data;
       lineNumber = 0;
 
-      res.send('Trace successful');
-    });
+      res.status(200).send('Trace successful');
+    })
+    .catch(() => res.status(500).send('Error'));
 });
 
 server.post('/code/file', upload.single('file'), (req, res) => {
@@ -39,14 +40,17 @@ server.post('/code/file', upload.single('file'), (req, res) => {
 
       fs.unlink(__dirname + '/../' + req.file.path, (err) => err ? console.log(err) : console.log('Temporary file deleted'));
 
-      res.send('Trace successful');
-    });
+      res.status(200).send('Trace successful');
+    })
+    .catch(() => res.status(500).send('Error'));
 });
 
 server.get('/step', (req, res) => {
-  res.send(JSON.stringify(traceData[lineNumber]));
+  res.status(200).send(JSON.stringify(traceData[lineNumber]));
   lineNumber++;
 });
+
+server.use((req, res) => res.status(404).send('Route not found'))
 
 //Start server:
 server.listen(1337, () => console.log('Server listening on port 1337.'));
