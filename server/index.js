@@ -22,27 +22,27 @@ server.use(express.static(__dirname + '/../client'));
 //Routes:
 server.post('/code/string', (req, res) => {
   trace.getTrace(req.body.code, 'string')
-    .then((data) => {
-      traceData = data;
-      lineNumber = 0;
+  .then((data) => {
+    traceData = data;
+    lineNumber = 0;
 
-      res.status(200).send('Trace successful');
-    })
-    .catch(() => res.status(500).send('Error'));
+    res.status(200).send('Trace successful');
+  })
+  .catch(() => res.status(500).send('Error'));
 });
 
 server.post('/code/file', upload.single('file'), (req, res) => {
-  var path = './' + req.file.path.match(/\/temp\/.+/)[0];
-  trace.getTrace(path, 'file')
-    .then((data) => {
-      traceData = data;
-      lineNumber = 0;
+  trace.getTrace('./' + req.file.path.match(/\/temp\/.+/)[0], 'file')
+  .then((data) => {
+    traceData = data;
+    lineNumber = 0;
 
-      fs.unlink(__dirname + '/../' + req.file.path, (err) => err ? console.log(err) : console.log('Temporary file deleted'));
+    //Delete the uploaded file:
+    fs.unlink(__dirname + '/../' + req.file.path, (err) => err ? console.log(err) : console.log('Temporary file deleted'));
 
-      res.status(200).send('Trace successful');
-    })
-    .catch(() => res.status(500).send('Error'));
+    res.status(200).send('Trace successful');
+  })
+  .catch(() => res.status(500).send('Error'));
 });
 
 server.get('/step', (req, res) => {
