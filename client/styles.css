@@ -1,20 +1,44 @@
-.main {
+body {
+  background-color: #003133;
+  color: #FFD1AA;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-content: center;
+  align-items: center;
+}
+
+.main {
+  background-color: #236467;
+  color: #D49B6A;
   width: 80%;
-}
-
-.row {
-  display: flex;
-  justify-content: space-around;
-}
-
-.button {
-  display: inline-block;
-  height: 1.5em;
-  border: 1px black solid;
+  padding: 2em;
+  margin: 2em;
   border-radius: 5px;
 }
 
+textarea {
+  width: 100%;
+  border-radius: 5px;
+  font-family: monospace;
+  background-color: #0D4A4D;
+  color: #FFD1AA;
+}
+
+input {
+  width: 100%;
+}
+
+.button {
+  display: block;
+  height: 1.5em;
+  margin-bottom: 1em;
+  border-radius: 5px;
+  text-align: center;
+
+  background-color: #804615;
+  color: #D49B6A;
+}
+
+.button:hover {
+  background-color: #D49B6A;
+  color: #804615;
+}

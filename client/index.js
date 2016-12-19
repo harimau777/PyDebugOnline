@@ -6,7 +6,7 @@ function handleCodeUploadBtn(event) {
     dataType: 'json',
     contentType: 'application/json',
     data: JSON.stringify({code : $('[name = "code"]').val()}),
-    success: (data) => $('.stepBtn').prop('disabled', false) //Enable the step button
+    success: () => $('.stepBtn').prop('disabled', false) //Enable the step button
   });
 }
 
